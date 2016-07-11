@@ -3,7 +3,7 @@
 	//Get JSON in the form of
 	//{"SchoolName" : "School Name", "Country" : "Country", Username" : "username entered"}
 	//Return
-	//[{"Status" : 200, "Name" : "name", "Image" : "image", "Orientation" : orientation}] OR [{"Status" : 409, "Message" : "error"}]
+	//[{"Status" : 200, "Name" : "name", "Image" : "image", "Orientation" : orientation, "Account" : 0 if student or 1 if teacher}] OR [{"Status" : 409, "Message" : "error"}]
 	$json = file_get_contents('php://input');
 	$decodedJSON = json_decode($json);
 	$conn = mysqli_connect("localhost", "root", "TechroomPass1234", "Techroom");
@@ -42,7 +42,7 @@
 			$id = $obj->ID;
 			$image = "StudentsUploadedImages/$id.png";
 		}
-		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation}]";
+		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation, 'Account' : 0}]";
 		exit;
 	}
 	
@@ -56,7 +56,7 @@
 			$id = $obj->ID;
 			$image = "TeachersUploadedImages/$id.png";
 		}
-		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation}]";
+		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation, 'Account' : 1}]";
 		exit;
 	}
 	
