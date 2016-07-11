@@ -15,23 +15,26 @@
 		echo "[{'Status' : 409, 'Message' : 'Failed to connect to database'}]";
 		exit;
 	}
+	
 	$query = "SELECT ID FROM Country WHERE Name = '$decodedJSON->Country'";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'Country $decodedJSON->Country does not exist'}]";
 		exit;
 	}
 	$result = mysqli_query($conn, $query);
 	$obj = mysqli_fetch_object($result);
-	$query = "SELECT ID FROM School WHERE
-				Country = $obj->ID AND
-				Password = '$decodedJSON->Password' AND
-				Name = '$decodedJSON->SchoolName'";
-				
+	$countryID = $obj->ID;
+	
+	$query = "SELECT ID FROM School WHERE Country = $countryID AND Password = '$decodedJSON->Password' AND Name = '$decodedJSON->SchoolName'";	
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'Incorrect school name, password, or country'}]";
+		exit;
 	}
+	
 	mysqli_close($conn);
 	echo "[{'Status' : 200}]";
 	exit;

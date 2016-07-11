@@ -22,6 +22,7 @@
 		$school = array("School" => $name, "Country" => $country);
 		array_push($schools, $school);
 	}
+	
 	mysqli_close($conn);
 	$mainArr["Schools"] = $schools;
 	array_push($ret, $mainArr);

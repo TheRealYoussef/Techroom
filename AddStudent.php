@@ -17,6 +17,7 @@
 	$query = "SELECT ID FROM Country WHERE Name = '$decodedJSON->Country'";	
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'Country $decodedJSON->Country does not exist'}]";
 		exit;
 	}
@@ -26,32 +27,32 @@
 	$query = "SELECT ID FROM School WHERE Name = '$decodedJSON->SchoolName' AND Country = $countryID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'No school $decodedJSON->SchoolName exists in the country $decodedJSON->Country'}]";
 		exit;
 	}
 	$obj = mysqli_fetch_object($result);
 	$schoolID  = $obj->ID;
 	
-	$query = "SELECT * FROM Student WHERE 
-						Username = '$decodedJSON->Username' AND
-						School = $schoolID";
+	$query = "SELECT * FROM Student WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) != 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409},'Message':'Username already exists']";
 		exit;
 	}
 	
-	$query = "SELECT * FROM Teacher WHERE 
-						Username = '$decodedJSON->Username' AND
-						School = $schoolID";
+	$query = "SELECT * FROM Teacher WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) != 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409,'Message':'Username already exists'}]";
 		exit;
 	}
 	
 	$query = "INSERT INTO Student (Username, Password, Name, School, Image, Orientation) VALUES ('$decodedJSON->Username','$decodedJSON->Password','$decodedJSON->Username', $schoolID, 0, 1)";			
-	$result = mysqli_query($conn, $query);
+	mysqli_query($conn, $query);
+	
 	mysqli_close($conn);
 	echo "[{'Status' : 200}]";
 	exit;

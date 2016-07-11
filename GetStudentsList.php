@@ -11,18 +11,21 @@
    	 	echo "[{'Status' : 409, 'Message' : 'Failed to connect to database'}]";
    	 	exit;
 	}
-	$query = "SELECT ID FROM Country WHERE 
-					Name = '$decodedJSON->Country'";
+	
+	$query = "SELECT ID FROM Country WHERE Name = '$decodedJSON->Country'";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'Country $decodedJSON->Country does not exist'}]";
 		exit;
 	}
 	$obj = mysqli_fetch_object($result);
 	$countryID = $obj->ID;
+	
 	$query = "SELECT ID FROM School WHERE Name = '$decodedJSON->SchoolName' AND Country = $countryID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'No school $decodedJSON->SchoolName exists in the country $decodedJSON->Country'}]";
 		exit;
 	}
@@ -34,6 +37,7 @@
 	$students = array();
 	$query = "SELECT Name, Image, ID, Orientation FROM Student WHERE School = $schoolID";
 	$result = mysqli_query($conn, $query);
+	mysqli_close($conn);
 	while ($obj = mysqli_fetch_object($result)) {
 		$name = $obj->Name;
 		$image = "";
@@ -45,7 +49,7 @@
 		$student = array("Name" => $name, "Image" => $image, "Orientation" => $orientation);
 		array_push($students, $student);
 	}
-	mysqli_close($conn);
+	
 	$mainArr["Students"] = $students;
 	array_push($ret, $mainArr);
 	echo json_encode($ret);

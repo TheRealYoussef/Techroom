@@ -26,6 +26,7 @@
 	$query = "SELECT ID, Quota FROM School WHERE Name = '$decodedJSON->SchoolName' AND Country = $countryID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'No school $decodedJSON->SchoolName exists in the country $decodedJSON->Country'}]";
 		exit;
 	}
@@ -33,30 +34,28 @@
 	$schoolID  = $obj->ID;
 	$quota = $obj->Quota;
 	
-	$query = "SELECT * FROM Student WHERE 
-						Username = '$decodedJSON->Username' AND
-						School = $schoolID";
+	$query = "SELECT * FROM Student WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) != 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409,'Message':'Username already exists'}]";
 		exit;
 	}
 	
-	$query = "SELECT * FROM Teacher WHERE 
-						Username = '$decodedJSON->Username' AND
-						School = $schoolID";
+	$query = "SELECT * FROM Teacher WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) != 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message':'Username already exists'}]";
 		exit;
 	}
 	
 	$query = "INSERT INTO Teacher (Username, Password, Name, School, Image, Orientation) VALUES ('$decodedJSON->Username','$decodedJSON->Password','$decodedJSON->Username', $schoolID, 0, 1)";
-	$result = mysqli_query($conn, $query);
+	mysqli_query($conn, $query);
 	
 	$quota = $quota - 1;
 	$query = "UPDATE School set Quota = $quota WHERE ID = $schoolID";
-	$result = mysqli_query($conn, $query);
+	mysqli_query($conn, $query);
 	
 	mysqli_close($conn);
 	echo "[{'Status' : 200}]";

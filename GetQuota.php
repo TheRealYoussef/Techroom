@@ -11,8 +11,8 @@
    	 	echo "[{'Status' : 409, 'Message' : 'Failed to connect to database'}]";
    	 	exit;
 	}
-	$query = "SELECT ID FROM Country WHERE 
-					Name = '$decodedJSON->Country'";
+	
+	$query = "SELECT ID FROM Country WHERE Name = '$decodedJSON->Country'";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
 		echo "[{'Status' : 409, 'Message' : 'Country $decodedJSON->Country does not exist'}]";
@@ -20,14 +20,18 @@
 	}
 	$obj = mysqli_fetch_object($result);
 	$countryID = $obj->ID;
+	
 	$query = "SELECT Quota FROM School WHERE Name = '$decodedJSON->SchoolName' AND Country = $countryID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
+		mysqli_close($conn);
 		echo "[{'Status' : 409, 'Message' : 'No school $decodedJSON->SchoolName exists in the country $decodedJSON->Country'}]";
 		exit;
 	}
 	$obj = mysqli_fetch_object($result);
 	$quota  = $obj->Quota;
+	
+	mysqli_close($conn);
 	echo "[{'Status' : 200, 'Quota' : $quota}]";
 	exit;
 ?>
