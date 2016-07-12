@@ -1,7 +1,7 @@
 <?php
 	header('Content-Type: application/json');
 	//Get JSON in the form of
-	//{"Username" : "username", "Password" : "password", "SchoolName" : "School name", "Country" : "Country name"}
+	//{"Username" : "username", "Password" : "password", "SchoolName" : "School name", "Country" : "Country name", "DeviceID" : "device id"}
 	//return [{'Status' : 200}] or [{'Status' : 409, 'Message' : 'message'}]
 	$json = file_get_contents('php://input');
 	$decodedJSON = json_decode($json);
@@ -42,6 +42,18 @@
 			echo "[{'Status' : 409, 'Message' : 'Incorrect username, password, school, or country'}]";
 			exit;
 		}
+		$obj = mysqli_fetch_object($result);
+		$teacherID = $obj->ID;
+	
+		$query = "UPDATE Teacher SET DeviceID = '$decodedJSON->DeviceID' WHERE ID = $teacherID";
+		mysqli_query($conn, $query);
+	}
+	else {
+		$obj = mysqli_fetch_object($result);
+		$studentID = $obj->ID;
+	
+		$query = "UPDATE Student SET DeviceID = '$decodedJSON->DeviceID' WHERE ID = $studentID";
+		mysqli_query($conn, $query);
 	}
 	
 	mysqli_close($conn);

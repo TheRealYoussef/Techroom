@@ -3,7 +3,57 @@
 	//Get JSON in the form of
 	//{"SchoolName" : "School Name", "Country" : "Country", Username" : "username entered"}
 	//Return
-	//[{"Status" : 200, "Name" : "name", "Image" : "image", "Orientation" : orientation, "Account" : 0 if student or 1 if teacher}] OR [{"Status" : 409, "Message" : "error"}]
+	//[
+	//	{
+	//		"Status" : 200, 
+	//		"Name" : "name", 
+	//		"Image" : "image", 
+	//		"Orientation" : orientation, 
+	//		"Account" : 0 if student or 1 if teacher, 
+	//		'Lessons' : 
+	//		[
+	//			{
+	//				'LessonID': lesson id, 
+	//				'Title' : 'lesson title', 
+	//				'Description' : 'lesson description',
+	//				'Teacher' : 'name of teacher'
+	//			}, 
+	//			{
+	//				'LessonID': lesson id, 
+	//				'Title' : 'lesson title',
+	//				'Description' : 'lesson description', 
+	//				'Teacher' : 'name of teacher'
+	//			}, 
+	//			...
+	//		]
+	//	}
+	//]
+	//OR
+	//[
+	//	{
+	//		"Status" : 200, 
+	//		"Name" : "name", 
+	//		"Image" : "image", 
+	//		"Orientation" : orientation, 
+	//		"Account" : 0 if student or 1 if teacher, 
+	//		'Lessons' : 
+	//		[
+	//			{
+	//				'LessonID': lesson id, 
+	//				'Title' : 'lesson title', 
+	//				'Description' : 'lesson description',
+	//			}, 
+	//			{
+	//				'LessonID': lesson id, 
+	//				'Title' : 'lesson title',
+	//				'Description' : 'lesson description', 
+	//			}, 
+	//			...
+	//		]
+	//	}
+	//]
+    //OR 
+	//[{"Status" : 409, "Message" : "error"}]
 	$json = file_get_contents('php://input');
 	$decodedJSON = json_decode($json);
 	$conn = mysqli_connect("localhost", "root", "TechroomPass1234", "Techroom");
@@ -32,31 +82,67 @@
 	$obj = mysqli_fetch_object($result);
 	$schoolID  = $obj->ID;
 	
+	$ret = array();
+	
 	$query = "SELECT Name, Image, Orientation, ID FROM Student WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 1) {
-		mysqli_close($conn);
 		$obj =  mysqli_fetch_object($result);
 		$image = "";
+		$studentID = $obj->ID;
 		if ($obj->Image == 1) {
-			$id = $obj->ID;
-			$image = "StudentsUploadedImages/$id.png";
+			$image = "StudentsUploadedImages/$studentID.png";
 		}
-		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation, 'Account' : 0}]";
+		$mainObj = array("Status" => 200, "Name" => $obj->Name, "Image" => $image, "Orientation" => $obj->Orientation, "Account" => 0);
+		$lessons = array();
+		$query = "SELECT Lesson FROM StudentLesson WHERE Student = $studentID";
+		$result = mysqli_query($conn, $query);
+		while ($obj = mysqli_fetch_object($result)) {
+			$lessonID = $obj->Lesson;
+			$query = "SELECT Name, Description, Teacher FROM Lesson WHERE ID = $lessonID";
+			$result2 =  mysqli_query($conn, $query);
+			$obj2 = mysqli_fetch_object($result2);
+			$title = $obj2->Name;
+			$description = $obj2->Description;
+			$teacherID = $obj2->Teacher;
+			$query = "SELECT Name FROM Teacher WHERE ID = $teacherID";
+			$result2 =  mysqli_query($conn, $query);
+			$obj2 = mysqli_fetch_object($result2);
+			$teacher = $obj2->Name;
+			$lesson = array("LessonID" => $lessonID, "Title" => $title, "Description" => $description, "Teacher" => $teacher);
+			array_push($lessons, $lesson);
+		}
+		mysqli_close($conn);
+		$mainObj["Lessons"] = $lessons;
+		array_push($ret, $mainObj);
+		echo json_encode($ret);
 		exit;
 	}
 	
 	$query = "SELECT Name, Image, Orientation, ID FROM Teacher WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 1) {
-		mysqli_close($conn);
 		$obj =  mysqli_fetch_object($result);
 		$image = "";
+		$teacherID = $obj->ID;
 		if ($obj->Image == 1) {
-			$id = $obj->ID;
-			$image = "TeachersUploadedImages/$id.png";
+			$image = "TeachersUploadedImages/$teacherID.png";
 		}
-		echo "[{'Status' : 200, 'Name' : '$obj->Name', 'Image' : '$image', 'Orientation' : $obj->Orientation, 'Account' : 1}]";
+		$mainObj = array("Status" => 200, "Name" => $obj->Name, "Image" => $image, "Orientation" => $obj->Orientation, "Account" => 1);
+		$lessons = array();
+		$query = "SELECT ID, Name, Description FROM Lesson WHERE Teacher = $teacherID";
+		$result = mysqli_query($conn, $query);
+		mysqli_close($conn);
+		while ($obj = mysqli_fetch_object($result)) {
+			$lessonID = $obj->ID;
+			$title = $obj->Name;
+			$description = $obj->Description;
+			$lesson = array("LessonID" => $lessonID, "Title" => $title, "Description" => $description);
+			array_push($lessons, $lesson);
+		}
+		$mainObj["Lessons"] = $lessons;
+		array_push($ret, $mainObj);
+		echo json_encode($ret);
 		exit;
 	}
 	

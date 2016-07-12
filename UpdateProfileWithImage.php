@@ -48,7 +48,7 @@
 				mysqli_query($conn, $query);
 			}
 			else {
-				unlink("StudentsUploadedImages/$id.png");
+				unlink($fileName);
 				$query = "UPDATE Student set Orientation = $orientation, Name = '$name' WHERE ID = $id";
 				mysqli_query($conn, $query);
 			}
@@ -64,7 +64,7 @@
 		}
 	}
 	else {
-		$query = "SELECT Image FROM Teacher WHERE Username = '$decodedJSON->Username' AND Password = '$decodedJSON->Password' AND School = $schoolID";
+		$query = "SELECT ID, Image FROM Teacher WHERE Username = '$decodedJSON->Username' AND Password = '$decodedJSON->Password' AND School = $schoolID";
 		$result = mysqli_query($conn, $query);
 		if (mysqli_num_rows($result) != 0) {
 			$obj = mysqli_fetch_object($result);
@@ -78,7 +78,7 @@
 					mysqli_query($conn, $query);
 				}
 				else {
-					unlink("TeachersUploadedImages/$id.png");
+					unlink($fileName);
 					$query = "UPDATE Teacher set Orientation = $orientation, Name = '$name' WHERE ID = $id";
 					mysqli_query($conn, $query);
 				}
