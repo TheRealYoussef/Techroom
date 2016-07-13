@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_shifted">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/account_type"
+        android:id="@+id/add_teacher_or_student_screen_account_type_label"
+        android:layout_marginBottom="20dp"
+        android:layout_alignStart="@+id/add_teacher_or_student_screen_username_label"
+        android:layout_above="@+id/add_teacher_or_student_screen_username_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:id="@+id/add_teacher_or_student_screen_username_label"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_above="@+id/add_teacher_or_student_screen_password_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:id="@+id/add_teacher_or_student_screen_password_label"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignStart="@+id/add_teacher_or_student_screen_username_label"
+        android:layout_above="@+id/add_teacher_or_student_screen_confirm_password_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_password"
+        android:id="@+id/add_teacher_or_student_screen_confirm_password_label"
+        android:textSize="15sp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignStart="@+id/add_teacher_or_student_screen_username_label"
+        android:layout_above="@+id/add_teacher_or_student_screen_sign_up_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up"
+        android:id="@+id/add_teacher_or_student_screen_sign_up_label"
+        android:textSize="15sp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_teacher_or_student_screen_username_edit_text"
+        android:inputType="textPersonName"
+        android:layout_alignEnd="@+id/add_teacher_or_student_screen_password_edit_text"
+        android:layout_alignBottom="@+id/add_teacher_or_student_screen_username_label" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_teacher_or_student_screen_password_edit_text"
+        android:inputType="textPassword"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"
+        android:layout_alignBottom="@+id/add_teacher_or_student_screen_password_label" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_teacher_or_student_screen_confirm_password_edit_text"
+        android:inputType="textPassword"
+        android:layout_alignEnd="@+id/add_teacher_or_student_screen_password_edit_text"
+        android:layout_alignBottom="@+id/add_teacher_or_student_screen_confirm_password_label" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_teacher_or_student_screen_spinner"
+        android:layout_alignBottom="@+id/add_teacher_or_student_screen_account_type_label"
+        android:layout_alignStart="@+id/add_teacher_or_student_screen_username_edit_text"
+        android:entries="@array/account_type_array" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_teacher_or_student_screen_teacher_quota"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_more_teachers"
+        android:textColor="#00FF00"
+        android:id="@+id/add_teacher_or_student_screen_add_teachers"
+        android:layout_below="@+id/add_teacher_or_student_screen_teacher_quota"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

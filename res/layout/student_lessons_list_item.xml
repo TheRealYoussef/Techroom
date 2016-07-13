@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/student_lessons_list_item_teacher"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingTop="5dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#808080"
+        android:id="@+id/student_lessons_list_item_name"
+        android:textSize="30sp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/student_lessons_list_item_description"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp" />
+
+</LinearLayout>

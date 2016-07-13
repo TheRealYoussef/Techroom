@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/teacher_or_student_profile_photo"
+            android:layout_gravity="center_vertical"
+            app:civ_border_width="0dp" />
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:id="@+id/teacher_or_student_profile_name"
+            android:textColor="#000000"
+            android:textSize="17sp"
+            android:layout_marginStart="20dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:src="@android:drawable/ic_menu_save"
+                android:background="@drawable/transparent_button_selector"
+                android:id="@+id/teacher_or_student_profile_save_profile_button" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:text="@string/add_new_lesson"
+        android:id="@+id/teacher_or_student_profile_add_new_lesson_button"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/teacher_or_student_profile_list" />
+
+</LinearLayout>

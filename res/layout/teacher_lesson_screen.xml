@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/teacher_lesson_screen_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        app:tabTextColor="#000000"
+        app:tabSelectedTextColor="#000000"
+        android:layout_alignParentTop="true">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/discussion_board" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/slides" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/connectivity" />
+
+    </android.support.design.widget.TabLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/teacher_lesson_screen_linear_layout_1"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/teacher_lesson_screen_tab_layout">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_info_details"
+            android:background="@drawable/transparent_button_selector"
+            android:id="@+id/teacher_lesson_screen_code_button" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_manage"
+            android:background="@drawable/transparent_button_selector"
+            android:id="@+id/teacher_lesson_screen_edit_lesson_button" />
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/teacher_lesson_screen_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/teacher_lesson_screen_tab_layout"
+        android:layout_toEndOf="@+id/teacher_lesson_screen_linear_layout_1" />
+
+</RelativeLayout>

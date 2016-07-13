@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_shifted">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/school"
+        android:id="@+id/teacher_or_student_sign_in_screen_school_label"
+        android:textSize="15sp"
+        android:layout_above="@+id/teacher_or_student_sign_in_screen_sign_in_label"
+        android:layout_alignStart="@+id/teacher_or_student_sign_in_screen_username_label"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:id="@+id/teacher_or_student_sign_in_screen_username_label"
+        android:textSize="15sp"
+        android:layout_above="@+id/teacher_or_student_sign_in_screen_password_label"
+        android:layout_alignStart="@+id/teacher_or_student_sign_in_screen_password_label"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:id="@+id/teacher_or_student_sign_in_screen_password_label"
+        android:layout_marginStart="40dp"
+        android:textSize="15sp"
+        android:layout_above="@+id/teacher_or_student_sign_in_screen_school_label"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        android:id="@+id/teacher_or_student_sign_in_screen_sign_in_label"
+        android:layout_marginBottom="10dp"
+        android:textSize="15sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/teacher_or_student_sign_in_screen_username_edit_text"
+        android:inputType="textPersonName"
+        android:layout_alignStart="@+id/teacher_or_student_sign_in_screen_password_edit_text"
+        android:layout_alignBottom="@+id/teacher_or_student_sign_in_screen_username_label"/>
+
+    <EditText
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/teacher_or_student_sign_in_screen_password_edit_text"
+        android:inputType="textPassword"
+        android:layout_alignBottom="@+id/teacher_or_student_sign_in_screen_password_label"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/teacher_or_student_sign_in_screen_spinner"
+        android:layout_alignBottom="@+id/teacher_or_student_sign_in_screen_school_label"
+        android:layout_alignStart="@+id/teacher_or_student_sign_in_screen_username_edit_text" />
+
+</RelativeLayout>
