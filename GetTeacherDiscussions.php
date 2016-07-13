@@ -56,8 +56,8 @@
 		$name = $obj->Name;
 		$extension = "";
 		if ($anonymous == 1)
-			$extension = "(prefers to be anonyomus)";
-		$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asked by: $name $extension", "Visible" => $visible, "DiscussionID" => $discussionID);
+			$extension = " (prefers to be anonyomus)";
+		$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asked by: $name$extension", "Visible" => $visible, "DiscussionID" => $discussionID);
 		array_push($discussions, $discussion);
 	}
 	mysqli_close($conn);

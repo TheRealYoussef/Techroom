@@ -11,12 +11,14 @@
 	//			{
 	//				'Question': "question", 
 	//				'Answer' : 'answer', 
-	//				'Name' : 'name'
+	//				'Name' : 'name',
+	//				'DiscussionID' : discussion id
 	//			}, 
 	//			{
 	//				'Question': "question", 
 	//				'Answer' : 'answer', 
 	//				'Name' : 'name'
+	//				'DiscussionID' : discussion id
 	//			}, 
 	//			...
 	//		]
@@ -36,22 +38,23 @@
 	$mainObj = array("Status" => 200);
 	$discussions = array();
 	
-	$query = "SELECT Question, Answer, Student, Anonymous FROM Discussion WHERE Lesson = $decodedJSON->LessonID AND Visible = 1";
+	$query = "SELECT ID, Question, Answer, Student, Anonymous FROM Discussion WHERE Lesson = $decodedJSON->LessonID AND Visible = 1";
 	$result = mysqli_query($conn, $query);
 	while ($obj = mysqli_fetch_object($result)) {
+		$discussionID = $obj->ID;
 		$question = $obj->Question;
 		$answer = $obj->Answer;
 		$studentID = $obj->Student;
 		$anonymous = $obj->Anonymous;
 		$discussion;
 		if ($anonymous == 1)
-			$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asker is anonymous");
+			$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asker is anonymous", "DiscussionID" => $discussionID);
 		else {
 			$query = "SELECT Name FROM Student WHERE ID = $studentID";
 			$result2 = mysqli_query($conn, $query);
 			$obj = mysqli_fetch_object($result2);
 			$name = $obj->Name;
-			$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asked by: $name");
+			$discussion = array("Question" => $question, "Answer" => $answer, "Name" => "Asked by: $name", "DiscussionID" => $discussionID);
 		}
 		array_push($discussions, $discussion);
 	}

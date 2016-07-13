@@ -9,7 +9,7 @@
 	//		"Name" : "name", 
 	//		"Image" : "image", 
 	//		"Orientation" : orientation, 
-	//		"Account" : 0 if student or 1 if teacher, 
+	//		"Account" : 0 if student or 1 if teacher (this will be 0 because this is a student account),
 	//		'Lessons' : 
 	//		[
 	//			{
@@ -35,7 +35,7 @@
 	//		"Name" : "name", 
 	//		"Image" : "image", 
 	//		"Orientation" : orientation, 
-	//		"Account" : 0 if student or 1 if teacher, 
+	//		"Account" : 0 if student or 1 if teacher (this will be 1 because this is a teacher account), 
 	//		'Lessons' : 
 	//		[
 	//			{
