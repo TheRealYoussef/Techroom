@@ -33,7 +33,7 @@
 	$obj = mysqli_fetch_object($result);
 	$schoolID  = $obj->ID;
 	
-	$query = "SELECT ID FROM Teacher WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
+	$query = "SELECT ID, DeviceID FROM Teacher WHERE Username = '$decodedJSON->Username' AND School = $schoolID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) == 0) {
 		echo "[{'Status' : 409, 'Message' : 'No teacher with username $decodedJSON->Username exists in the school $decodedJSON->SchoolName'}]";
@@ -41,6 +41,7 @@
 	}
 	$obj = mysqli_fetch_object($result);
 	$teacherID = $obj->ID;
+	$deviceID = $obj->DeviceID;
 	
 	$query = "SELECT * FROM Lesson WHERE Name = '$decodedJSON->Title' AND Teacher = $teacherID";
 	$result = mysqli_query($conn, $query);
@@ -64,7 +65,7 @@
 	$query = "INSERT INTO Lesson (Name, Description, CanBeRecorded, Started, Ended, Code, Teacher) VALUES ('$decodedJSON->Title', '$decodedJSON->Description', $decodedJSON->CanBeRecorded, 0, 0, '$code', $teacherID)";				
  	mysqli_query($conn, $query);
   	$lessonID = mysqli_insert_id($conn);
-
+	
 	mysqli_close($conn);
 	echo "[{'Status' : 200, 'Code':'$code', 'LessonID' :$lessonID}]";
 	exit;

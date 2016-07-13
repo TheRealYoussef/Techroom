@@ -1,7 +1,7 @@
 <?php
 	header('Content-Type: application/json');
 	//Get JSON in the form of
-	//{"LessonID" : lesson id, "Username" : "student username", "ShoolName" : "school name", "Country" : "school's country", "Anonymous" : 0 or 1, "Question" : "question"}
+	//{"LessonID" : lesson id, "Username" : "student username", "SchoolName" : "school name", "Country" : "school's country", "Anonymous" : 0 or 1, "Question" : "question"}
 	//Return [{'Status' : 200}] OR [{'Status' : 409, 'Message' : 'error message'}]
 	$json = file_get_contents('php://input');
 	$decodedJSON = json_decode($json);
@@ -40,6 +40,9 @@
 	$obj = mysqli_fetch_object($result);
 	$studentID = $obj->ID;
 	$name = $obj->Name;
+	$extension = "";
+	if ($decodedJSON->Anonymous == 1)
+		$extension = " (prefers to be anonyomus)";
 	
 	$query = "SELECT Teacher FROM Lesson WHERE ID = $decodedJSON->LessonID";
 	$result = mysqli_query($conn, $query);
@@ -96,7 +99,9 @@
 	$message = array(
 		'ID' => 'AddDiscussion',
 		'Message' => "$name asked a question",
-		'DiscussionID' => $discussionID
+		'Question' => $decodedJSON->Question,
+		'DiscussionID' => $discussionID,
+		'Name' => "Asked by: $name$extension"
 		);
 	
 	sendNotification($tokens, $message);

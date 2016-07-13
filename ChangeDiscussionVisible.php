@@ -11,7 +11,7 @@
    	 	exit;
 	}
 
-	$query = "SELECT Lesson FROM Discussion WHERE ID = $decodedJSON->DiscussionID";
+	$query = "SELECT Lesson, Question, Answer, Student, Anonymous FROM Discussion WHERE ID = $decodedJSON->DiscussionID";
 	$result = mysqli_query($conn, $query);
 	if (mysqli_num_rows($result) != 1) {
 		echo "[{'Status' : 409, 'Message' : 'Discussion does not exist'}]";
@@ -20,6 +20,20 @@
 	$obj = mysqli_fetch_object($result);
 	$lessonID = $obj->Lesson;
 	$visible = $decodedJSON->Visible;
+	$question = $obj->Question;
+	$answer = $obj->Answer;
+	$studentID = $obj->Student;
+	$anonymous = $obj->Anonymous;
+	$studnetName;
+	
+	if ($anonymous == 1)
+		$studnetName = "Asker is anonymous";
+	else {
+		$query = "SELECT Name FROM Student WHERE ID = $studentID";
+		$result = mysqli_query($conn, $query);
+		$obj = mysqli_fetch_object($result);
+		$studnetName = "Asked by: " . $obj->Name;
+	}
 	
 	$query = "SELECT Teacher FROM Lesson WHERE ID = $lessonID";
 	$result = mysqli_query($conn, $query);
@@ -82,7 +96,10 @@
 		$message = array(
 			'ID' => 'DiscussionVisible',
 			'Message' => "$name made a question visible",
-			'DiscussionID' => $decodedJSON->DiscussionID
+			'DiscussionID' => $decodedJSON->DiscussionID,
+			'Question' => $question,
+			'Answer' => $answer,
+			'Name' => $studnetName
 			);
 	}
 	else {

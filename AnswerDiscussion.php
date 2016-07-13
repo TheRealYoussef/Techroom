@@ -82,7 +82,8 @@
 		$message = array(
 			'ID' => 'AnswerDiscussion',
 			'Message' => "$name answered a question",
-			'DiscussionID' => $decodedJSON->DiscussionID
+			'DiscussionID' => $decodedJSON->DiscussionID,
+			'Answer' => $decodedJSON->Answer
 			);
 		
 		sendNotification($tokens, $message);
