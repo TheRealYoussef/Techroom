@@ -33,8 +33,8 @@ public class StudentsListFragment extends Fragment {
         final View v = inflater.inflate(R.layout.list_screen, container, false);
         arrayList = new ArrayList<TeacherOrStudentProfileListItemContent>();
         try {
-            String school = Misc.readFromFile(getResources().getString(R.string.school_file_name));
-            String country = Misc.readFromFile(getResources().getString(R.string.country_file_name));
+            String school = Misc.readFromFile(getResources().getString(R.string.school_file_name), getContext());
+            String country = Misc.readFromFile(getResources().getString(R.string.country_file_name), getContext());
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("SchoolName", school);

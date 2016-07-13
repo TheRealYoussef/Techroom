@@ -22,9 +22,9 @@ public class SchoolProfileActivity extends AppCompatActivity {
         setContentView(R.layout.school_profile_screen);
 
         try {
-            Misc.readFromFile(getResources().getString(R.string.school_file_name));
-            Misc.readFromFile(getResources().getString(R.string.country_file_name));
-            Misc.readFromFile(getResources().getString(R.string.password_file_name));
+            Misc.readFromFile(getResources().getString(R.string.school_file_name), this);
+            Misc.readFromFile(getResources().getString(R.string.country_file_name), this);
+            Misc.readFromFile(getResources().getString(R.string.password_file_name), this);
 
             final TabLayout tabLayout = (TabLayout) findViewById(R.id.school_profile_screen_tab_layout);
             final ViewPager viewPager = (ViewPager) findViewById(R.id.school_profile_screen_view_pager);
@@ -76,9 +76,9 @@ public class SchoolProfileActivity extends AppCompatActivity {
         }
         catch (IOException e) {
             Toast.makeText(this, "Failed to sign in", Toast.LENGTH_LONG).show();
-            Misc.deleteFile(getResources().getString(R.string.school_file_name));
-            Misc.deleteFile(getResources().getString(R.string.country_file_name));
-            Misc.deleteFile(getResources().getString(R.string.password_file_name));
+            Misc.deleteFile(getResources().getString(R.string.school_file_name), this);
+            Misc.deleteFile(getResources().getString(R.string.country_file_name), this);
+            Misc.deleteFile(getResources().getString(R.string.password_file_name), this);
             finish();
         }
     }

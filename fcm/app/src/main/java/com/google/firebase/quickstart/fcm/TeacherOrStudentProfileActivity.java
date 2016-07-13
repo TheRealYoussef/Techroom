@@ -131,10 +131,10 @@ public class TeacherOrStudentProfileActivity extends AppCompatActivity {
         }
         catch (IOException e) {
             Toast.makeText(this, "Failed to sign in", Toast.LENGTH_LONG).show();
-            Misc.deleteFile(getResources().getString(R.string.school_file_name));
-            Misc.deleteFile(getResources().getString(R.string.country_file_name));
-            Misc.deleteFile(getResources().getString(R.string.username_file_name));
-            Misc.deleteFile(getResources().getString(R.string.password_file_name));
+            Misc.deleteFile(getResources().getString(R.string.school_file_name), this);
+            Misc.deleteFile(getResources().getString(R.string.country_file_name), this);
+            Misc.deleteFile(getResources().getString(R.string.username_file_name), this);
+            Misc.deleteFile(getResources().getString(R.string.password_file_name), this);
             finish();
         }
     }
@@ -318,10 +318,10 @@ public class TeacherOrStudentProfileActivity extends AppCompatActivity {
     }
 
     private void initialize() throws IOException {
-        school = Misc.readFromFile(getResources().getString(R.string.school_file_name));
-        country = Misc.readFromFile(getResources().getString(R.string.country_file_name));
-        username = Misc.readFromFile(getResources().getString(R.string.username_file_name));
-        password = Misc.readFromFile(getResources().getString(R.string.password_file_name));
+        school = Misc.readFromFile(getResources().getString(R.string.school_file_name), this);
+        country = Misc.readFromFile(getResources().getString(R.string.country_file_name), this);
+        username = Misc.readFromFile(getResources().getString(R.string.username_file_name), this);
+        password = Misc.readFromFile(getResources().getString(R.string.password_file_name), this);
         imageChanged = false;
         encodedString = "";
         progressDialog = new ProgressDialog(this);

@@ -57,9 +57,9 @@ public class StudentLessonActivity extends AppCompatActivity {
         setContentView(R.layout.student_lesson_screen);
 
         try {
-            school = Misc.readFromFile(getResources().getString(R.string.school_file_name));
-            country = Misc.readFromFile(getResources().getString(R.string.country_file_name));
-            username = Misc.readFromFile(getResources().getString(R.string.username_file_name));
+            school = Misc.readFromFile(getResources().getString(R.string.school_file_name), this);
+            country = Misc.readFromFile(getResources().getString(R.string.country_file_name), this);
+            username = Misc.readFromFile(getResources().getString(R.string.username_file_name), this);
 
             lessonID = getIntent().getExtras().getInt("LessonID");
 

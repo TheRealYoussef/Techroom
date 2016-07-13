@@ -42,9 +42,9 @@ public class NewLessonActivity extends AppCompatActivity {
         setContentView(R.layout.new_lesson_screen);
 
         try {
-            school = Misc.readFromFile(getResources().getString(R.string.school_file_name));
-            country = Misc.readFromFile(getResources().getString(R.string.country_file_name));
-            username = Misc.readFromFile(getResources().getString(R.string.username_file_name));
+            school = Misc.readFromFile(getResources().getString(R.string.school_file_name), this);
+            country = Misc.readFromFile(getResources().getString(R.string.country_file_name), this);
+            username = Misc.readFromFile(getResources().getString(R.string.username_file_name), this);
 
             cancel = (Button)findViewById(R.id.new_lesson_screen_cancel_button);
             cancel.setOnClickListener(new View.OnClickListener() {

@@ -79,9 +79,8 @@ public class AddTeacherOrStudentActivity extends AppCompatActivity {
     private void init() throws IOException {
         quota = 0;
         teacherQuotaLabel = (TextView) findViewById(R.id.add_teacher_or_student_screen_teacher_quota);
-        Misc.activity = this;
-        school = Misc.readFromFile(getResources().getString(R.string.school_file_name));
-        country = Misc.readFromFile(getResources().getString(R.string.country_file_name));
+        school = Misc.readFromFile(getResources().getString(R.string.school_file_name), this);
+        country = Misc.readFromFile(getResources().getString(R.string.country_file_name), this);
         spinner = (Spinner)findViewById(R.id.add_teacher_or_student_screen_spinner);
         usernameEdit = (EditText)findViewById(R.id.add_teacher_or_student_screen_username_edit_text);
         passwordEdit = (EditText) findViewById(R.id.add_teacher_or_student_screen_password_edit_text);
@@ -131,14 +130,14 @@ public class AddTeacherOrStudentActivity extends AppCompatActivity {
     private boolean getInfoFromUI() {
         accountType = spinner.getSelectedItem().toString();
         StringBuilder username = new StringBuilder(usernameEdit.getText().toString());
-        if (!Misc.checkUsername(username, getResources().getString(R.string.username_is_empty)))
+        if (!Misc.checkUsername(username, getResources().getString(R.string.username_is_empty), this))
             return false;
         usernameEdited = username.toString();
         password = passwordEdit.getText().toString();
-        if (!Misc.checkPassword(password))
+        if (!Misc.checkPassword(password, this))
             return false;
         confirmPassword = confirmPasswordEdit.getText().toString();
-        if (!Misc.checkPasswordMatchesConfirmPassword(password, confirmPassword))
+        if (!Misc.checkPasswordMatchesConfirmPassword(password, confirmPassword, this))
             return false;
         if (accountType.equals("Teacher") && quota == 0) {
             Toast.makeText(AddTeacherOrStudentActivity.this, "Teacher quota is 0. Buy a larger quota to add more teachers",

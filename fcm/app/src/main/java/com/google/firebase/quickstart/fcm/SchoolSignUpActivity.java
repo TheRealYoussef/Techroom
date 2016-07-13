@@ -21,22 +21,20 @@ public class SchoolSignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.school_sign_up_screen);
 
-        Misc.activity = this;
-
         TextView signUp = (TextView)findViewById(R.id.school_sign_up_screen_sign_up_label);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringBuilder username = new StringBuilder(((EditText)findViewById(R.id.school_sign_up_screen_school_edit_text)).getText().toString());
-                if (!Misc.checkUsername(username, getResources().getString(R.string.school_is_empty)))
+                if (!Misc.checkUsername(username, getResources().getString(R.string.school_is_empty), SchoolSignUpActivity.this))
                     return;
                 String usernameEdited = username.toString();
                 String password = ((EditText)findViewById(R.id.school_sign_up_screen_password_edit_text)).getText().toString();
-                if (!Misc.checkPassword(password))
+                if (!Misc.checkPassword(password, SchoolSignUpActivity.this))
                     return;
                 String confirmPassword = ((EditText)findViewById(R.id.school_sign_up_screen_confirm_password_edit_text)).getText().toString();
                 String country = ((Spinner)findViewById(R.id.school_sign_up_screen_spinner)).getSelectedItem().toString();
-                if (!Misc.checkPasswordMatchesConfirmPassword(password, confirmPassword))
+                if (!Misc.checkPasswordMatchesConfirmPassword(password, confirmPassword, SchoolSignUpActivity.this))
                     return;
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setType("message/rfc822");

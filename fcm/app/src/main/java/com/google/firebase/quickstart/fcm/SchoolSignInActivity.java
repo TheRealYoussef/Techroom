@@ -45,8 +45,6 @@ public class SchoolSignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.school_sign_in_screen);
 
-        Misc.activity = this;
-
         TextView signInAsASchool= (TextView)findViewById(R.id.school_sign_in_screen_contact_us_label);
         signInAsASchool.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +104,7 @@ public class SchoolSignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final String school = schools.get(spinner.getSelectedItemPosition());
                 final String password = ((EditText)findViewById(R.id.school_sign_in_screen_password_edit_text)).getText().toString();
-                if (!Misc.checkPassword(password))
+                if (!Misc.checkPassword(password, SchoolSignInActivity.this))
                     return;
                 final String country = countries.get(spinner.getSelectedItemPosition());
                 signIn.setEnabled(false);
@@ -124,9 +122,9 @@ public class SchoolSignInActivity extends AppCompatActivity {
                                 int status = ret.getInt("Status");
                                 if (status == 200) {
                                     try {
-                                        Misc.writeToFile(getResources().getString(R.string.school_file_name), school);
-                                        Misc.writeToFile(getResources().getString(R.string.password_file_name), password);
-                                        Misc.writeToFile(getResources().getString(R.string.country_file_name), country);
+                                        Misc.writeToFile(getResources().getString(R.string.school_file_name), school, SchoolSignInActivity.this);
+                                        Misc.writeToFile(getResources().getString(R.string.password_file_name), password, SchoolSignInActivity.this);
+                                        Misc.writeToFile(getResources().getString(R.string.country_file_name), country, SchoolSignInActivity.this);
                                         Intent i = new Intent(SchoolSignInActivity.this, SchoolProfileActivity.class);
                                         startActivity(i);
                                     }

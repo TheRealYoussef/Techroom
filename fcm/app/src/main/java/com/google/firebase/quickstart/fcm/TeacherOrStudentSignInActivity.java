@@ -37,8 +37,6 @@ public class TeacherOrStudentSignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.teacher_or_student_sign_in_screen);
 
-        Misc.activity = this;
-
         final List<String> schools =  new ArrayList<String>();
         final List<String> countries = new ArrayList<String>();
         final Spinner spinner = (Spinner)findViewById(R.id.teacher_or_student_sign_in_screen_spinner);
@@ -88,11 +86,11 @@ public class TeacherOrStudentSignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 StringBuilder username = new StringBuilder(((EditText)findViewById(R.id.teacher_or_student_sign_in_screen_username_edit_text)).getText().toString());
-                if (!Misc.checkUsername(username, getResources().getString(R.string.username_is_empty)))
+                if (!Misc.checkUsername(username, getResources().getString(R.string.username_is_empty), TeacherOrStudentSignInActivity.this))
                     return;
                 final String usernameEdited = username.toString();
                 final String password = ((EditText)findViewById(R.id.teacher_or_student_sign_in_screen_password_edit_text)).getText().toString();
-                if (!Misc.checkPassword(password))
+                if (!Misc.checkPassword(password, TeacherOrStudentSignInActivity.this))
                     return;
                 final String school = spinner.getSelectedItem().toString();
                 final String country = countries.get(spinner.getSelectedItemPosition());
@@ -112,10 +110,10 @@ public class TeacherOrStudentSignInActivity extends AppCompatActivity {
                                 int status = ret.getInt("Status");
                                 if (status == 200) {
                                     try {
-                                        Misc.writeToFile(getResources().getString(R.string.username_file_name), usernameEdited);
-                                        Misc.writeToFile(getResources().getString(R.string.school_file_name), school);
-                                        Misc.writeToFile(getResources().getString(R.string.password_file_name), password);
-                                        Misc.writeToFile(getResources().getString(R.string.country_file_name), country);
+                                        Misc.writeToFile(getResources().getString(R.string.username_file_name), usernameEdited, TeacherOrStudentSignInActivity.this);
+                                        Misc.writeToFile(getResources().getString(R.string.school_file_name), school, TeacherOrStudentSignInActivity.this);
+                                        Misc.writeToFile(getResources().getString(R.string.password_file_name), password, TeacherOrStudentSignInActivity.this);
+                                        Misc.writeToFile(getResources().getString(R.string.country_file_name), country, TeacherOrStudentSignInActivity.this);
                                         Intent i = new Intent(TeacherOrStudentSignInActivity.this, TeacherOrStudentProfileActivity.class);
                                         startActivity(i);
                                     }
